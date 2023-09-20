@@ -24,7 +24,7 @@ headers : ({
 }),
 })
 } catch (err) {
-//error
+window.location.href = "/"
 }
     // You can add more validation rules here as needed
 
@@ -49,8 +49,10 @@ headers : ({
 }),
 })
 } catch (err) {
-//error
+window.location.href = "/" 
+    return false;
 }
+    window.location.href = "/dashboard"
     return true; // Return true for now; implement further validation as needed
 }
 // Simulated data for waste offers and messages
