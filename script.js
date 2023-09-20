@@ -9,17 +9,48 @@ function validateRegistration() {
         return false;
     }
 
+    try {
+  const loginDetails  = await fetch("https://wastetrade.onrender.com/register", 
+{
+method: "POST",
+body: JSON.stringify({
+name: username,
+email: email,
+userType: userType,
+password: password 
+}),
+headers : ({
+" Content-type " : "application/json"
+}),
+})
+} catch (err) {
+//error
+}
     // You can add more validation rules here as needed
 
     return true;
 }
 
 function validateLogin() {
-    const email = document.getElementById("email").value;
+    const username = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     // You can add validation rules for the login form here
-
+    try {
+  const loginDetails  = await fetch("https://wastetrade.onrender.com/login", 
+{
+method: "POST",
+body: JSON.stringify({
+name: username,
+password: password 
+}),
+headers : ({
+" Content-type " : "application/json"
+}),
+})
+} catch (err) {
+//error
+}
     return true; // Return true for now; implement further validation as needed
 }
 // Simulated data for waste offers and messages
