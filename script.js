@@ -98,18 +98,28 @@ async function displayWasteOffers(userType) {
 }
 
 // Function to display messages or conversations based on user type (student or agency)
-function displayMessages(userType) {
+async function displayMessages(userType) {
     const messagesSection = document.getElementById("messages");
     const messagesList = messagesSection.querySelector("ul");
     messagesList.innerHTML = "";
 
+    try {
+      const listings = await fetch("https://wastetrade.onrender.com/myListings")
+
+        listings.offers.forEach((message) => {
+        if (message.type === userType) {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${message.sender}: ${message.message}`;
+            messagesList.appendChild(listItem);
+        }
+    } catch (err) {
     messagesData.forEach((message) => {
         if (message.type === userType) {
             const listItem = document.createElement("li");
             listItem.textContent = `${message.sender}: ${message.message}`;
             messagesList.appendChild(listItem);
         }
-    });
+    });}
 }
 
 // Replace [User Type] with 'student' or 'agency' based on the user type
