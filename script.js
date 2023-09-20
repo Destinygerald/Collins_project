@@ -1,4 +1,4 @@
-function validateRegistration() {
+async function validateRegistration() {
     const username = document.getElementById("username").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -24,14 +24,15 @@ headers : ({
 }),
 })
 } catch (err) {
-window.location.href = "/"
+window.location.href = "/sign-up"
+return false;
 }
     // You can add more validation rules here as needed
-
+    window.location.href = "login";
     return true;
 }
 
-function validateLogin() {
+async function validateLogin() {
     const username = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
@@ -49,7 +50,7 @@ headers : ({
 }),
 })
 } catch (err) {
-window.location.href = "/" 
+window.location.href = "/login" 
     return false;
 }
     window.location.href = "/dashboard"
@@ -69,11 +70,23 @@ const messagesData = [
 ];
 
 // Function to display waste offers based on user type (student or agency)
-function displayWasteOffers(userType) {
+async function displayWasteOffers(userType) {
     const offersSection = document.getElementById("offers");
     const offersList = offersSection.querySelector("ul");
     offersList.innerHTML = "";
 
+    try {
+        const listings = await fetch("https://wastetrade.onrender.com/myListings")
+         listings.forEach((offer) => {
+        if (offer.type === userType) {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${offer.wasteInfo}: ${offer?.dateCreated}`;
+            offersList.appendChild(listItem);
+        }
+    });
+    }
+    catch (err) {
+    
     wasteOffersData.forEach((offer) => {
         if (offer.type === userType) {
             const listItem = document.createElement("li");
@@ -81,6 +94,7 @@ function displayWasteOffers(userType) {
             offersList.appendChild(listItem);
         }
     });
+    }
 }
 
 // Function to display messages or conversations based on user type (student or agency)
